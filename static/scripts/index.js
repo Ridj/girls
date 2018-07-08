@@ -1,12 +1,21 @@
-function updatePage() {
-    function GetJSON(url) {
-        let request = new XMLHttpRequest();
-        request.open('GET', url, true);
-        request.send(null);
-        return request.responseText;
+function getJSON(url) {
+    let request = new XMLHttpRequest();
+    request.open('GET', url, true);
+    request.send(null);
+    request.onreadystatechange = function() {
+        if (request.readyState !== 4) return;
+        if (request.status !== 200) {
+            alert(request.status + ': ' + request.statusText);
+        } else {
+            getPage(request.responseText);
+        }
     }
+}
 
-    let json_obj = JSON.parse(GetJSON('api/girls'));
+let divGirl;
+
+function getPage(json) {
+    let json_obj = JSON.parse(json);
     let ul = document.createElement('ul');
         for(let i = 0; i < json_obj.length; i++) {
             let li = document.createElement('li');
@@ -18,6 +27,15 @@ function updatePage() {
         div.appendChild(ul);
 }
 
-(function() {
-    updatePage();
-})();
+let girlsVue = new Vue({
+   el: '#app',
+    methods: {
+       updatePage: function() {
+           getJSON('api/girls');
+       }
+    },
+   data: {
+   }
+});
+
+getJSON('api/girls');

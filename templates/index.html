@@ -6,8 +6,10 @@
   <title>Girls</title>
 </head>
 <body>
-  <div id="girls"></div>
-  <button onclick="updatePage()">Update</button>
+  <div id="app">
+    <div id="girls"></div>
+    <button @click="updatePage">Update</button>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
   <script src="{% static 'scripts/index.js' %}" async></script>
