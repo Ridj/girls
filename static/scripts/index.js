@@ -1,7 +1,7 @@
 function updatePage() {
     function GetJSON(url) {
         let request = new XMLHttpRequest();
-        request.open('GET', url, false);
+        request.open('GET', url, true);
         request.send(null);
         return request.responseText;
     }
