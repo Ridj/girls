@@ -18,7 +18,8 @@ let girlsVue = new Vue({
                 }
             }).bind(this);
        }
+    },
+    created: function() {
+        this.updateGirlsList();
     }
 });
-
-girlsVue.updateGirlsList();
