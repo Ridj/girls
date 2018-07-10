@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Girl(models.Model):
-    girl_name = models.CharField(max_length=30)
-    girl_age = models.IntegerField(default=18)
+    name = models.CharField(max_length=30)
+    age = models.IntegerField(default=18)
 
     def __str__(self):
-        return self.girl_name + ', ' + str(self.girl_age)
+        return self.name + ', ' + str(self.age)

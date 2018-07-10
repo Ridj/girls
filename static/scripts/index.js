@@ -5,7 +5,7 @@ let girlsVue = new Vue({
     data:  {
        girlsList: []
     },
-    template: `<div><ul><li v-for="girl in girlsList">{{girl['girl_name']}}, {{girl['girl_age']}}</li></ul>
+    template: `<div><ul><li v-for="girl in girlsList">{{girl.name}}, {{girl.age}}</li></ul>
     <button @click="updateGirlsList">Update</button></div>`,
     methods: {
         updateGirlsList: function() {

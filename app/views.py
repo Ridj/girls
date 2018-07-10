@@ -4,7 +4,7 @@ from .models import Girl
 
 
 def girls_api(request):
-    girls = list(Girl.objects.all().order_by('-id').values('girl_name', 'girl_age'))
+    girls = list(Girl.objects.all().order_by('-id').values('name', 'age'))
     return JsonResponse(girls, safe=False)
 
 
