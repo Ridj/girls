@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from gogogirl.views import girls_api, index
+from app.views import girls_api, index
 
 urlpatterns = [
     path('', index),
