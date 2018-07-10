@@ -3,18 +3,12 @@ function getJSON(url) {
     request.open('GET', url, true);
     request.send(null);
     request.onreadystatechange = function() {
-        if (request.readyState !== 4) return;
-        if (request.status !== 200) {
-            alert(request.status + ': ' + request.statusText);
-        } else {
-            getPage(request.responseText);
-        }
+        if (request.readyState === 4 && request.status === 200) return request.responseText;
     }
 }
 
-let divGirl;
 
-function getPage(json) {
+function genGirlsUL(json) {
     let json_obj = JSON.parse(json);
     let ul = document.createElement('ul');
         for(let i = 0; i < json_obj.length; i++) {
@@ -22,16 +16,20 @@ function getPage(json) {
             li.innerText = json_obj[i]['girl_name'] + ', ' + json_obj[i]['girl_age'];
             ul.appendChild(li);
         }
-    let div = document.getElementById('girls');
-        div.innerHTML = '';
-        div.appendChild(ul);
+    return ul;
 }
+
+function updateGirlsDOM(ul) {
+    document.getElementById('girls').innerHTML = ul;
+}
+
+
 
 let girlsVue = new Vue({
    el: '#app',
     methods: {
        updatePage: function() {
-           getJSON('api/girls');
+           updateGirlsDOM(genGirlsUL(getJSON('api/girls')));
        }
     },
    data: {
