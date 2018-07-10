@@ -1,39 +1,24 @@
-function getJSON(url) {
-    let request = new XMLHttpRequest();
-    request.open('GET', url, true);
-    request.send(null);
-    request.onreadystatechange = function() {
-        if (request.readyState === 4 && request.status === 200) return request.responseText;
-    }
-}
-
-
-function genGirlsUL(json) {
-    let json_obj = JSON.parse(json);
-    let ul = document.createElement('ul');
-        for(let i = 0; i < json_obj.length; i++) {
-            let li = document.createElement('li');
-            li.innerText = json_obj[i]['girl_name'] + ', ' + json_obj[i]['girl_age'];
-            ul.appendChild(li);
-        }
-    return ul;
-}
-
-function updateGirlsDOM(ul) {
-    document.getElementById('girls').innerHTML = ul;
-}
-
-
+'use strict';
 
 let girlsVue = new Vue({
-   el: '#app',
-    methods: {
-       updatePage: function() {
-           updateGirlsDOM(genGirlsUL(getJSON('api/girls')));
-       }
+    el: '#app',
+    data:  {
+       girlsList: []
     },
-   data: {
-   }
+    template: `<div><ul><li v-for="girl in girlsList">{{girl['girl_name']}}, {{girl['girl_age']}}</li></ul>
+    <button @click="updateGirlsList">Update</button></div>`,
+    methods: {
+        updateGirlsList: function() {
+            let request = new XMLHttpRequest();
+            request.open('GET', '/api/girls', true);
+            request.send(null);
+            request.onreadystatechange = (function() {
+                if (request.readyState === 4 && request.status === 200) {
+                    this.girlsList = JSON.parse(request.responseText);
+                }
+            }).bind(this);
+       }
+    }
 });
 
-getJSON('api/girls');
+girlsVue.updateGirlsList();
